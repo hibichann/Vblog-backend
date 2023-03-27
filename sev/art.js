@@ -6,16 +6,19 @@ let getBlogByPage = async (lang, page, classId) => {
 	let sql = "",
 		sql2 = ""
 	if (classId) {
-		sql = `SELECT * FROM blog b
+		sql = `SELECT b.id, b.title, b.content, b.createdate, b.status, b.class, b.lang, cla.${lang}name as typename FROM blog b
 		LEFT JOIN classify cla
 		on cla.class_id=b.class
 		WHERE b.class=${classId}
-		AND lang='${lang}'
+		AND b.status=1 
+		AND b.lang='${lang}'
 		ORDER BY b.createdate DESC
 		LIMIT ${start},10;`
 		sql2 = `select COUNT(*) as total from blog where class=${classId}`
 	} else {
-		sql = `select * from blog where status=1 AND lang='${lang}' limit ${start},10 `
+		sql = `select b.id, b.title, b.content, b.createdate, b.status, b.class, b.lang, cla.${lang}name as typename from blog b
+		LEFT JOIN classify cla
+		on cla.class_id=b.class where b.status=1 AND b.lang='${lang}' limit ${start},10 `
 		sql2 = `select COUNT(*) as total from blog`
 	}
 	let content = await db.Query(sql)
