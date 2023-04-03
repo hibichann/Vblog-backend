@@ -1,9 +1,8 @@
 const db = require("../db.js")
 //获取分类数据并转为树状
 let getCateTree = async (lang) => {
-	let sql = `select class_id as menuId,class_parent as menuParent,cnname as menuName from classify order by class_id`
-	let sql1 = `select class_id as menuId,class_parent as menuParent,enname as menuName from classify order by class_id`
-	let data1 = await db.Query(1 ? sql : sql1)
+	let sql = `select class_id as menuId,class_parent as menuParent,${lang}name as menuName from classify order by class_id`
+	let data1 = await db.Query(sql)
 	data1.forEach((item, index, arr) => {
 		if (arr[index].menuId) {
 			arr[index].menuId = arr[index].menuId.toString()

@@ -13,12 +13,13 @@ let getCard1 = async () => {
 	return { art: art[0], cate: cate[0].cateTotal, tag: tag[0].tagTotal }
 }
 //右侧卡片4
-let getCard4 = async () => {
+let getCard4 = async (lang) => {
 	return await db.Query(`
     SELECT * FROM blog
     -- UNION ALL
     -- SELECT * FROM blogen e
     WHERE \`status\`=1
+    and blog.lang='${lang}'
     ORDER BY createdate desc
     LIMIT 5`)
 }

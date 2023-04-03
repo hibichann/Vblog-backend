@@ -6,13 +6,14 @@ let getAllTags = async () => {
 	return await db.Query(sql)
 }
 //通过tag获取文章
-let getBlogbyTag = async (page, id) => {
+let getBlogbyTag = async (lang, page, id) => {
 	let start = (page ? page : 1) * 10 - 10
 	let sql = `
 	SELECT * from tag_blog
 	LEFT JOIN blog
 	on blog.id=tag_blog.blogid
 	WHERE tag_blog.tagid=${id}
+	and blog.lang='${lang}'
 	LIMIT ${start},10;`
 	//bytag暂时不区分中英文
 	// AND blog.lang='${lang}'

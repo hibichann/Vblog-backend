@@ -1,9 +1,7 @@
 const db = require("../db.js")
-let dayjs = require("dayjs")
 // 使用 Array.reduce() 函数对博客文章进行分组
-
-let getArchive = async () => {
-	let sql = `SELECT * FROM blog ORDER BY createdate ASC;`
+let getArchive = async (lang) => {
+	let sql = `SELECT * FROM blog where blog.lang='${lang}' ORDER BY createdate ASC;`
 	const blogList = (await db.Query(sql)).reverse()
 	// 使用 Array.reduce() 函数对博客文章进行分组
 	const blogGroups = blogList.reduce((groups, blog) => {
