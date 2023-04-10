@@ -1,13 +1,22 @@
 const express = require("express")
 const router = express.Router()
 
+const bodyParser = require("body-parser")
 const card = require("./sev/card")
 const cate = require("./sev/cate")
 const art = require("./sev/art")
 const tag = require("./sev/tag")
 const archive = require("./sev/archive")
 const search = require("./sev/search")
+const save = require("./sev/save")
 
+// 注册 body-parser 中间件
+router.use(bodyParser.urlencoded({ extended: false }))
+router.use(bodyParser.json())
+//上传文章
+router.post("/postArticle", async (req, res) => {
+	res.send(await save.postArt(req.body))
+})
 //获取归档
 router.get("/getArchive", async (req, res) => {
 	res.send(await archive.getArchive(req.headers["lang"]))
@@ -51,5 +60,9 @@ router.get("/getCard4", async (req, res) => {
 //搜索
 router.get("/search", async (req, res) => {
 	res.send(await search.search(req.headers["lang"], req.query.str))
+})
+//友链
+router.get("/getlink", async (req, res) => {
+	res.send(await search.link())
 })
 module.exports = router

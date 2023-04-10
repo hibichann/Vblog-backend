@@ -21,7 +21,12 @@ let getArchive = async (lang) => {
 			return new Date(b.createdate) - new Date(a.createdate)
 		})
 	})
-	return blogGroups
+	return {
+		blogGroups,
+		total: (
+			await db.Query(`SELECT COUNT(*) AS total FROM blog WHERE lang='${lang}'`)
+		)[0].total,
+	}
 }
 module.exports = {
 	getArchive,

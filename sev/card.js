@@ -16,8 +16,6 @@ let getCard1 = async () => {
 let getCard4 = async (lang) => {
 	return await db.Query(`
     SELECT * FROM blog
-    -- UNION ALL
-    -- SELECT * FROM blogen e
     WHERE \`status\`=1
     and blog.lang='${lang}'
     ORDER BY createdate desc
