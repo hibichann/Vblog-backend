@@ -10,12 +10,12 @@ let pool = mysql.createPool({
 	// timezone: "utc", //大坑，必须加这一句，否则时间不对
 })
 //封装数据库sql请求操作，返回的是一个包含对象的数组
-let Query = (sql) => {
+let Query = (sql, params) => {
 	return new Promise(function (resolve, reject) {
 		//从连接池中拿一条链接
 		pool.getConnection(function (err, connection) {
 			if (err) return reject(err)
-			connection.query(sql, function (error, res) {
+			connection.query(sql, params, function (error, res) {
 				// console.log(res);
 				connection.release()
 				if (error) {
@@ -29,4 +29,5 @@ let Query = (sql) => {
 
 module.exports = {
 	Query,
+	pool,
 }
