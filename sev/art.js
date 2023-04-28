@@ -14,12 +14,12 @@ let getBlogByPage = async (lang, page, classId) => {
 		AND b.lang='${lang}'
 		ORDER BY b.createdate DESC
 		LIMIT ${start},10;`
-		sql2 = `select COUNT(*) as total from blog where class=${classId}`
+		sql2 = `select COUNT(*) as total from blog where class=${classId} and lang='${lang}'`
 	} else {
 		sql = `select b.id, b.title, b.content, b.createdate, b.status, b.class, b.lang, cla.${lang}name as typename from blog b
 		LEFT JOIN classify cla
 		on cla.class_id=b.class where b.status=1 AND b.lang='${lang}' limit ${start},10 `
-		sql2 = `select COUNT(*) as total from blog`
+		sql2 = `select COUNT(*) as total from blog where lang='${lang}'`
 	}
 	let content = await db.Query(sql)
 	let total = await db.Query(sql2)
@@ -40,7 +40,17 @@ let getArticle = async (id) => {
 	where id=${id}`
 	return (await db.Query(sql))[0]
 }
+//通过id获取标签
+let getTag = async (id) => {
+	let sql = `SELECT tag.tag_id, tag.tag_name
+	FROM tag
+	INNER JOIN tag_blog ON tag.tag_id = tag_blog.tagid
+	WHERE tag_blog.blogid = ${id}
+	GROUP BY tag.tag_id;`
+	return await db.Query(sql)
+}
 module.exports = {
 	getArticle,
 	getBlogByPage,
+	getTag,
 }

@@ -13,6 +13,10 @@ const save = require("./sev/save")
 // 注册 body-parser 中间件
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
+//文章tag
+router.get("/getTag", async (req, res) => {
+	res.send(await art.getTag(req.query.id))
+})
 //上传文章
 router.post("/postArticle", async (req, res) => {
 	res.send(await save.postArt(req.body))
@@ -62,7 +66,7 @@ router.get("/search", async (req, res) => {
 	res.send(await search.search(req.headers["lang"], req.query.str))
 })
 //友链
-router.get("/getlink", async (req, res) => {
+router.get("/getLink", async (req, res) => {
 	res.send(await search.link())
 })
 module.exports = router

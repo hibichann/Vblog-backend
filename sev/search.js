@@ -18,8 +18,7 @@ let search = async (lang, str) => {
 }
 let link = async () => {
 	let sql = `select * from link`
-	let data1 = await db.Query(sql)
-	return data1
+	return await db.Query(sql)
 }
 module.exports = {
 	search,
