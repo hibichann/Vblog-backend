@@ -24,7 +24,6 @@ let getBlogByPage = async (lang, page, classId) => {
 	let content = await db.Query(sql)
 	let total = await db.Query(sql2)
 	content.forEach((item, index, arr) => {
-		arr[index].date = dayjs(arr[index].date).format("YYYY-MM-DD")
 		arr[index].createdate = dayjs(arr[index].createdate).format("YYYY-MM-DD")
 	})
 	// console.log({ total: total[0].total, content })
@@ -33,7 +32,7 @@ let getBlogByPage = async (lang, page, classId) => {
 
 //通过id获取文章详情
 let getArticle = async (id) => {
-	let sql = `select b.id,b.title,b.content,b.date,b.createdate,b.status,b.class,c.cnname 
+	let sql = `select b.id,b.title,b.content,b.createdate,b.status,b.class,c.cnname 
 	from blog as b 
 	LEFT JOIN classify as c 
 	on b.class = c.class_id 
