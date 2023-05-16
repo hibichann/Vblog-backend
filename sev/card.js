@@ -1,5 +1,5 @@
 const db = require("../db.js")
-//右侧卡片1
+//右侧卡片1统计
 let getCard1 = async () => {
 	let art = await db.Query(`SELECT 
     SUM(CASE WHEN lang='en' THEN 1 ELSE 0 END) AS enTotal, 
@@ -12,7 +12,7 @@ let getCard1 = async () => {
     SELECT COUNT(*) as tagTotal FROM tag;`)
 	return { art: art[0], cate: cate[0].cateTotal, tag: tag[0].tagTotal }
 }
-//右侧卡片4
+//右侧卡片4最新五篇
 let getCard4 = async (lang) => {
 	return await db.Query(`
     SELECT * FROM blog

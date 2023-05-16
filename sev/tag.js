@@ -1,5 +1,10 @@
 const db = require("../db.js")
 let dayjs = require("dayjs")
+//新增tag
+let addTag = async (tag) => {
+	let sql = `INSERT INTO tag (tag_name) VALUES('${tag}')`
+	return await db.Query(sql)
+}
 //获取所有tag
 let getAllTags = async () => {
 	let sql = `SELECT * FROM tag`
@@ -28,4 +33,5 @@ let getBlogbyTag = async (lang, page, id) => {
 module.exports = {
 	getAllTags,
 	getBlogbyTag,
+	addTag,
 }

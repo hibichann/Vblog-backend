@@ -1,5 +1,16 @@
 const db = require("../db.js")
 let dayjs = require("dayjs")
+//最新10篇
+let getIndex = async (lang) => {
+	return {
+		content: await db.Query(`
+    SELECT * FROM blog
+    WHERE \`status\`=1
+    and blog.lang='${lang}'
+    ORDER BY createdate desc
+    LIMIT 10`),
+	}
+}
 //分页获取文章列表(有分类id显示分类否则显示全部)
 let getBlogByPage = async (lang, page, classId) => {
 	let start = (page ? page : 1) * 10 - 10
@@ -52,4 +63,5 @@ module.exports = {
 	getArticle,
 	getBlogByPage,
 	getTag,
+	getIndex,
 }

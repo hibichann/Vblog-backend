@@ -13,6 +13,10 @@ const save = require("./sev/save")
 // 注册 body-parser 中间件
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
+//新增tag
+router.post("/addTag", async (req, res) => {
+	res.send(await tag.addTag(req.body.tagname))
+})
 //文章tag
 router.get("/getTag", async (req, res) => {
 	res.send(await art.getTag(req.query.id))
@@ -34,6 +38,10 @@ router.get("/getBlogByPage", async (req, res) => {
 			req.query.classid
 		)
 	)
+})
+//最新10篇
+router.get("/getIndex", async (req, res) => {
+	res.send(await art.getIndex(req.headers["lang"]))
 })
 //分页获取文章列表通过tag(有分类id显示分类否则显示全部)
 router.get("/getBlogbyTag", async (req, res) => {
