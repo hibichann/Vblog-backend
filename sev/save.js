@@ -8,7 +8,7 @@ let postArt = async (req) => {
 		})
 		.then(async () => {
 			let result = await db.Query(
-				"SELECT * FROM blog WHERE id = LAST_INSERT_ID()"
+				"SELECT id FROM blog ORDER BY id DESC LIMIT 1;"
 			)
 			let values = req.tagarr
 				.map((tagid) => {
