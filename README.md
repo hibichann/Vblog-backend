@@ -1,7 +1,7 @@
 # Vblog-backend
 
 ```
-nodemon ./app.js
+node ./app.js
 ```
 
 
